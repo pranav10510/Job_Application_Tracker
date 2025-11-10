@@ -3,7 +3,7 @@ import json
 import re
 
 OLLAMA_API_URL = "http://localhost:11434/api/generate"
-MODEL_NAME = "mistral:7b"
+MODEL_NAME = "llama3.2:3b"
 
 def call_ollama(prompt):
     """Call Ollama API to analyze text"""
@@ -19,7 +19,7 @@ def call_ollama(prompt):
                     "num_predict": 200
                 }
             },
-            timeout=60
+            timeout=300
         )
         
         if response.status_code == 200:

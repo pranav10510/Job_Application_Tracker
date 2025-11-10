@@ -32,9 +32,18 @@ def get_gmail_service():
                 access_type='offline', prompt='consent'
             )
             print(f"Visit: {auth_url}")
-            code = input("Paste redirect URL: ").strip()
-            flow.fetch_token(authorization_response=code)
-            creds = flow.credentials
+            print("Waiting for authorization...")
+            try:
+                # Try to get input with a timeout-like approach
+                import sys
+                if sys.stdin.isatty():
+                    code = input("Paste redirect URL: ").strip()
+                    flow.fetch_token(authorization_response=code)
+                    creds = flow.credentials
+                else:
+                    raise Exception("Cannot get user input - please authenticate manually")
+            except (EOFError, KeyboardInterrupt):
+                raise Exception("Authentication cancelled - please authenticate manually")
         
         with open(config.TOKEN_FILE, 'wb') as token:
             pickle.dump(creds, token)

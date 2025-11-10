@@ -50,6 +50,7 @@ def run_scan_job(days_back):
         for i, email in enumerate(emails):
             scan_status['processed'] = i + 1
             scan_status['progress'] = 40 + int((i / len(emails)) * 50)
+            scan_status['message'] = f'Analyzing email {i+1}/{len(emails)} with AI (may take 1-2 min per email)...'
             
             from ai_analyzer import extract_job_info
             job_info = extract_job_info(email)
