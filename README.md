@@ -16,6 +16,7 @@ A smart job application tracker that automatically scans your Gmail for job-rela
 ### Prerequisites
 
 - Python 3.8+
+- Node.js 16+ (for React frontend)
 - Gmail account with API access
 - Ollama installed locally
 
@@ -101,13 +102,33 @@ This will:
 
 The authentication token will be saved as `token.pkl` for future use.
 
-### 6. Start the Application
+### 6. Set Up React Frontend (Optional - Modern UI)
 
 ```bash
+# Navigate to the React frontend directory
+cd job-tracker
+
+# Install Node.js dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+The React frontend will run on **http://localhost:5173** (Vite default port)
+
+### 7. Start the Flask Backend
+
+```bash
+# From the main project directory
 python app.py
 ```
 
-Open your browser and go to: **http://localhost:5000**
+The Flask API will run on **http://localhost:5000**
+
+**Note**: You can use either:
+- **Modern React UI**: http://localhost:5173 (recommended - better UX)
+- **Legacy HTML UI**: http://localhost:5000 (simple, works without Node.js)
 
 ## 🔧 Configuration
 
@@ -140,7 +161,9 @@ DEFAULT_DAYS_BACK = 60  # Adjust as needed
 
 ## 📱 Usage
 
-1. **Launch the Web Interface**: Visit http://localhost:5000
+1. **Launch the Web Interface**:
+   - React UI: Visit http://localhost:5173 (run `npm run dev` in job-tracker/)
+   - Legacy UI: Visit http://localhost:5000
 2. **Start Scanning**: Click "Launch Scan" button
 3. **Choose Time Range**: Select from 5 days to 120 days back
 4. **Monitor Progress**: Real-time progress bar and status updates
@@ -192,8 +215,8 @@ ollama list
 
 ```
 Job_Tracker/
-├── app.py                 # Flask web application
-├── email_fetcher.py       # Gmail API integration  
+├── app.py                 # Flask web application (backend API)
+├── email_fetcher.py       # Gmail API integration
 ├── ai_analyzer.py         # Ollama AI analysis
 ├── database.py           # SQLite database operations
 ├── config.py             # Configuration settings
@@ -201,8 +224,13 @@ Job_Tracker/
 ├── token.pkl            # Gmail auth token (auto-generated)
 ├── requirements.txt     # Python dependencies
 ├── job_tracker.db       # SQLite database (auto-generated)
-└── frontend/
-    └── index.html       # Web interface
+├── frontend/            # Legacy HTML frontend
+│   └── index.html
+└── job-tracker/         # Modern React frontend
+    ├── src/            # React components
+    ├── public/         # Static assets
+    ├── package.json    # Node dependencies
+    └── vite.config.js  # Vite configuration
 ```
 
 ## 🔒 Security & Privacy
