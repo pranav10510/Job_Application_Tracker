@@ -265,4 +265,6 @@ If you encounter issues:
 For additional help, create an issue in the GitHub repository with:
 - Error messages
 - Steps to reproduce
+
 - Your system information (OS, Python version)
+- <img width="1894" height="903" alt="Screenshot 2025-11-21 011621" src="https://github.com/user-attachments/assets/68b40036-218d-422a-8e41-70e01cc88e83" />
