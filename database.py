@@ -39,13 +39,17 @@ def init_database():
     print("✓ Database initialized")
 
 def add_job_to_db(job_info):
-    """Add job application to database"""
+    """Add job application to database
+
+    Returns:
+        int: Inserted row ID if successful, None if duplicate
+    """
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-    
+
     try:
         cursor.execute('''
-            INSERT INTO job_applications 
+            INSERT INTO job_applications
             (company, role, date_applied, status, email_subject, email_from, notes)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ''', (
@@ -57,14 +61,22 @@ def add_job_to_db(job_info):
             job_info.get('email_from', ''),
             ''
         ))
+        job_id = cursor.lastrowid
         conn.commit()
         conn.close()
-        return True
+        return job_id
     except sqlite3.IntegrityError:
         # Duplicate entry
         conn.close()
-        return False
-
+        return None
+def get_last_insert_id() -> int:
+    """Get the ID of the last inserted row"""
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
+    cursor.execute("SELECT last_insert_rowid()")
+    row_id = cursor.fetchone()[0]
+    conn.close()
+    return row_id
 def get_all_jobs():
     """Get all job applications"""
     conn = sqlite3.connect(DB_FILE)

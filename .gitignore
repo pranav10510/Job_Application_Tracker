@@ -56,12 +56,22 @@ logs/
 *.db
 *.sqlite
 *.sqlite3
+job_tracker.db
+
+# Excel output files
+*.xlsx
+job_applications.xlsx
 
 # Credentials and tokens
 credentials.json
 token.pkl
 *.pem
 *.key
+
+# RAG vector storage
+chroma_db/
+*.pkl
+tfidf_rag.pkl
 
 # Temporary files
 *.tmp
@@ -94,3 +104,32 @@ dist-ssr/
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
+coverage/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# macOS
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Python mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Backup files
+*.bak
+*.backup
+*~

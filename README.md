@@ -6,10 +6,84 @@ A smart job application tracker that automatically scans your Gmail for job-rela
 
 - **Automatic Email Scanning**: Scans Gmail for job applications, confirmations, and responses
 - **AI-Powered Analysis**: Uses Ollama (llama3.2:3b) to categorize and extract job information
+- **🧠 RAG (Retrieval-Augmented Generation)**: Smart context-aware analysis using past applications
 - **Real-time Web Interface**: Modern web UI with progress tracking
 - **Smart Filtering**: Filters by status (Applied, Interview, Offer, etc.)
 - **Database Storage**: SQLite database to track all applications
 - **Customizable Search**: Configurable keywords and date ranges
+
+## 🧠 RAG - Smart Context-Aware Analysis
+
+### What is RAG?
+
+RAG (Retrieval-Augmented Generation) makes your AI analysis smarter by learning from your past applications. It uses **TF-IDF vectorization** (lightweight, no GPU needed) to build a searchable index of your job applications.
+
+### How RAG Helps You
+
+#### During Email Scanning:
+
+1. **Builds a searchable index** of all your job applications
+   - Company names, positions, email content, status, etc.
+   - Stored locally in `./chroma_db/tfidf_rag.pkl`
+
+2. **Provides AI context** when analyzing NEW emails:
+   - Before analyzing each email, RAG searches for similar past applications
+   - Passes those similar applications to Ollama as context
+   - **Result:** AI makes better decisions about:
+     - ✅ Company name extraction (recognizes companies you've applied to before)
+     - ✅ Position/role identification (knows your typical job titles)
+     - ✅ Status categorization (learns from past email patterns)
+
+### Example
+
+**Without RAG:**
+```
+New email from "Google Careers <noreply@google.com>"
+AI: "Hmm, what company is this from?"
+→ May misidentify or extract incorrectly
+```
+
+**With RAG:**
+```
+New email from "Google Careers <noreply@google.com>"
+RAG finds: "You applied to Google before (Software Engineer, Status: Interview)"
+AI: "This is from Google, probably related to a software role"
+→ Better extraction accuracy!
+```
+
+### Terminal Logs
+
+You'll see RAG working in your terminal:
+```bash
+✓ RAG: Found 3 similar applications
+  - Top match: Google - Software Engineer (similarity: 87%)
+```
+
+Or when it's a new company/role:
+```bash
+ℹ️ RAG: No similar applications found (might be a new company/role)
+```
+
+### Configuration
+
+RAG is enabled by default. To disable it, edit `config.py`:
+
+```python
+USE_RAG = False  # Set to True to enable (default: True)
+```
+
+Adjust RAG parameters in `config.py`:
+```python
+TOP_K_RESULTS = 3              # Number of similar apps to retrieve
+SIMILARITY_THRESHOLD = 0.7     # Minimum similarity score (0-1)
+```
+
+### Technical Details
+
+- **Vectorization**: TF-IDF (scikit-learn) - fast, lightweight, no PyTorch/GPU required
+- **Similarity**: Cosine similarity for semantic matching
+- **Storage**: Pickle-based persistent storage in `./chroma_db/`
+- **Performance**: Near-instant retrieval, minimal overhead
 
 ## 🚀 Quick Start
 
@@ -217,13 +291,16 @@ ollama list
 Job_Tracker/
 ├── app.py                 # Flask web application (backend API)
 ├── email_fetcher.py       # Gmail API integration
-├── ai_analyzer.py         # Ollama AI analysis
+├── ai_analyzer.py         # Ollama AI analysis with RAG support
+├── rag_engine.py         # RAG engine (TF-IDF vectorization)
 ├── database.py           # SQLite database operations
-├── config.py             # Configuration settings
+├── config.py             # Configuration settings (includes RAG config)
 ├── credentials.json      # Gmail API credentials (you create this)
 ├── token.pkl            # Gmail auth token (auto-generated)
 ├── requirements.txt     # Python dependencies
 ├── job_tracker.db       # SQLite database (auto-generated)
+├── chroma_db/           # RAG vector storage (auto-generated)
+│   └── tfidf_rag.pkl   # TF-IDF index
 ├── frontend/            # Legacy HTML frontend
 │   └── index.html
 └── job-tracker/         # Modern React frontend

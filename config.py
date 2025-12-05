@@ -21,3 +21,28 @@ JOB_KEYWORDS = [
     "thank you for applying", "application received",
     "noreply", "jobs-noreply", "recruiting"
 ]
+# ==================== RAG CONFIGURATION ====================
+
+# Embedding Model (local, no API key needed)
+EMBEDDING_MODEL = "all-MiniLM-L6-v2"  # Fast, 384-dim embeddings
+# Alternative: "all-mpnet-base-v2"  # Slower but more accurate, 768-dim
+
+# Vector Database
+CHROMA_DB_PATH = "./chroma_db"  # Where to store vector database
+COLLECTION_NAME = "job_applications"  # ChromaDB collection name
+
+# RAG Settings
+TOP_K_RESULTS = 3  # How many similar past applications to retrieve
+SIMILARITY_THRESHOLD = 0.7  # Minimum similarity score (0-1)
+
+# What to index for RAG
+RAG_FIELDS = [
+    "company_name",
+    "position", 
+    "email_subject",
+    "email_body",
+    "notes"  # User notes from past applications
+]
+
+# Enable/Disable RAG
+USE_RAG = True  # Lightweight TF-IDF based RAG
