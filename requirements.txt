@@ -1,10 +1,56 @@
+# Web Framework
+Flask==3.0.0
+Flask-CORS==4.0.0
+Flask-SocketIO==5.3.5
+python-socketio==5.10.0
+Werkzeug==3.0.1
+
+# Database
+SQLAlchemy==2.0.23
+
+# Google APIs
 google-auth-oauthlib==1.0.0
 google-auth-httplib2==0.1.0
 google-api-python-client==2.95.0
+
+# Data Processing
 pandas==2.1.3
 openpyxl==3.1.2
-ollama==0.1.6
 python-dateutil==2.8.2
-flask==3.0.0
-flask-cors==4.0.0
+
+# HTTP & Web Scraping
 requests==2.31.0
+beautifulsoup4==4.12.3
+urllib3==2.1.0
+
+# AI/ML - Ollama (Updated for langchain-ollama compatibility)
+ollama>=0.3.0
+
+# LangChain Core (Phase 2 & 3) - Let pip resolve compatible versions
+langchain>=0.3.7,<0.4.0
+langchain-community>=0.3.7,<0.4.0
+langchain-core>=0.3.23,<0.4.0
+langchain-ollama>=0.2.0,<0.3.0
+
+# LangGraph for Agents (Phase 3)
+langgraph>=0.2.58,<0.3.0
+
+# Vector Store & Embeddings (RAG)
+chromadb==0.4.22
+sentence-transformers==2.3.1
+faiss-cpu==1.8.0
+
+# Data Validation
+pydantic==2.10.5
+pydantic-core==2.27.2
+
+# Utilities
+python-dotenv==1.0.0
+email-validator==2.1.0
+
+# ML/NLP (for RAG)
+scikit-learn==1.3.2
+numpy==1.26.2
+
+# Development/Testing (Optional)
+pytest==7.4.3

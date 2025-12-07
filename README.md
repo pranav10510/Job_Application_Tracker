@@ -1,15 +1,126 @@
-# Job Tracker - Email Scanner & Application Manager
+# Job Tracker - AI-Powered Job Application Manager
 
-A smart job application tracker that automatically scans your Gmail for job-related emails and organizes them using AI analysis. Built with Flask, Gmail API, and Ollama AI.
+A smart job application tracker that automatically scans your Gmail for job-related emails and organizes them using AI analysis. Features autonomous AI agents for drafting emails, researching companies, and preparing for interviews. Built with Flask, React, Gmail API, and Ollama AI.
 
-## 🌟 Features
+## 🌟 Key Features
 
-- **Automatic Email Scanning**: Scans Gmail for job applications, confirmations, and responses
-- **AI-Powered Analysis**: Uses Ollama (llama3.2:3b) to categorize and extract job information
-- **Real-time Web Interface**: Modern web UI with progress tracking
-- **Smart Filtering**: Filters by status (Applied, Interview, Offer, etc.)
-- **Database Storage**: SQLite database to track all applications
-- **Customizable Search**: Configurable keywords and date ranges
+### 📧 Automatic Email Scanning
+- Scans Gmail for job applications, confirmations, and responses
+- Smart keyword-based filtering
+- Configurable date ranges
+
+### 🤖 Autonomous AI Agents (NEW!)
+Three powerful AI agents to automate your job search:
+
+- **📧 Email Agent**: Drafts professional email responses with tone matching and template selection
+- **🔍 Research Agent**: Deep company research including news, culture insights, and salary data
+- **📚 Interview Agent**: Creates personalized interview prep plans with practice questions
+
+### 🎨 Modern Beautiful UI
+- Stunning gradient cards for each agent (purple, pink, cyan)
+- Smooth animations and hover effects
+- Real-time progress tracking with step-by-step visualization
+- Dynamic card expansion
+- Professional, responsive design
+
+### 🧠 RAG (Retrieval-Augmented Generation)
+- Smart context-aware analysis using past applications
+- TF-IDF vectorization for fast similarity search
+- Improves AI accuracy over time
+
+### 🔗 LangChain Integration
+- Professional AI framework with retry logic
+- Autonomous agent state machines using LangGraph
+- Tool-based architecture for extensibility
+
+### 📊 Real-time Dashboard
+- Live progress tracking during scans
+- Filter by status (Applied, Interview, Offer, etc.)
+- Modern React UI with dark mode support
+- SQLite database for persistent storage
+
+## 🤖 AI Agents - Detailed
+
+### Email Response Agent
+**What it does:**
+- Analyzes incoming email tone and context
+- Selects appropriate response template (interview acceptance, follow-up, thank you, etc.)
+- Drafts professional responses matching the sender's tone
+- Requires approval before sending
+
+**Features:**
+- 5 pre-built templates (interview acceptance/decline, follow-up, thank you, status inquiry)
+- AI-generated responses for custom situations
+- Tone analysis (formal/casual, urgent/relaxed)
+- Gmail integration ready
+
+### Company Research Agent
+**What it does:**
+- Searches web for company information
+- Scrapes company websites
+- Finds recent news and developments
+- Analyzes company culture from reviews
+- Looks up salary data for positions
+- Compiles comprehensive research report
+
+**Features:**
+- Web search integration
+- Website scraping with BeautifulSoup
+- News aggregation
+- Culture insights from Glassdoor
+- Salary estimation
+- Professional PDF-ready reports
+
+### Interview Prep Agent
+**What it does:**
+- Analyzes job requirements from application
+- Generates role-specific practice questions
+- Creates personalized study plan
+- Provides interview tips and strategies
+- Uses RAG to learn from your past applications
+
+**Features:**
+- Practice question database
+- Customized study schedules (based on available hours)
+- Technical and behavioral question prep
+- Company-specific insights
+- Weakness analysis and improvement tips
+
+## 🎬 Agent Demo
+
+### Beautiful Agent Cards
+```
+┌──────────────┐  ┌──────────────┐  ┌──────────────┐
+│ Purple Glow  │  │  Pink Glow   │  │  Cyan Glow   │
+│     📧       │  │      🔍      │  │      📚      │
+│ (floating)   │  │  (floating)  │  │  (floating)  │
+│              │  │              │  │              │
+│ Email Agent  │  │   Research   │  │  Interview   │
+│              │  │    Agent     │  │    Agent     │
+│ [LAUNCH] →   │  │  [LAUNCH] →  │  │  [LAUNCH] →  │
+└──────────────┘  └──────────────┘  └──────────────┘
+```
+
+### Dynamic Progress
+```
+┌─────────────────────────────────────────┐
+│  📧 Email Agent              ×          │
+│                                         │
+│  ⟳ Working...                           │
+│  ────────────────────────────           │
+│  ✓ Analyzing tone and context           │
+│  ✓ Selecting template                   │
+│  ⟳ Drafting response... (active)        │
+│  3 Reviewing and formatting             │
+│  ────────────────────────────           │
+│  Progress: 75% ████████████████░░░░     │
+│                                         │
+│  ✨ Results Ready                        │
+│  Draft: Dear Hiring Manager...          │
+│                                         │
+│  [✓ Approve & Execute]  [Close]         │
+└─────────────────────────────────────────┘
+```
 
 ## 🚀 Quick Start
 
@@ -72,7 +183,7 @@ curl -fsSL https://ollama.ai/install.sh | sh
 
 #### Install the AI Model
 ```bash
-# Install the lightweight model (recommended)
+# Install the lightweight model (recommended for agents)
 ollama pull llama3.2:3b
 
 # Or install Mistral (larger, slower)
@@ -102,7 +213,7 @@ This will:
 
 The authentication token will be saved as `token.pkl` for future use.
 
-### 6. Set Up React Frontend (Optional - Modern UI)
+### 6. Set Up React Frontend
 
 ```bash
 # Navigate to the React frontend directory
@@ -115,7 +226,7 @@ npm install
 npm run dev
 ```
 
-The React frontend will run on **http://localhost:5173** (Vite default port)
+The React frontend will run on **http://localhost:5173**
 
 ### 7. Start the Flask Backend
 
@@ -126,14 +237,64 @@ python app.py
 
 The Flask API will run on **http://localhost:5000**
 
-**Note**: You can use either:
-- **Modern React UI**: http://localhost:5173 (recommended - better UX)
-- **Legacy HTML UI**: http://localhost:5000 (simple, works without Node.js)
+### 8. Access the Application
+
+Open your browser and go to **http://localhost:5173**
+
+## 📱 Usage
+
+### Basic Workflow
+
+1. **Dashboard**: View all job applications and statistics
+2. **Scan Emails**: Click "Launch Scan" to import new applications
+3. **AI Agents**: Select a job and use AI agents to automate tasks
+
+### Using AI Agents
+
+1. **Navigate to AI Agents** (🤖 in sidebar)
+2. **Select a Job Application** from the grid
+3. **Choose an Agent**:
+   - Click "Launch Agent" on Email, Research, or Interview card
+4. **Watch Progress**: Real-time steps with animations
+5. **Review Results**: See the agent's output
+6. **Approve & Execute**: Click to execute the action
+
+### Email Scanning
+
+1. Click "Launch Scan" on Dashboard
+2. Choose time range (5 days to 120 days)
+3. Monitor real-time progress
+4. Review imported applications
 
 ## 🔧 Configuration
 
+### Agent Settings
+
+Edit `config.py` to customize agent behavior:
+
+```python
+# Agent Configuration
+AGENTS_ENABLED = True
+EMAIL_AGENT_ENABLED = True
+RESEARCH_AGENT_ENABLED = True
+INTERVIEW_AGENT_ENABLED = True
+
+# Agent Behavior
+AGENT_MAX_ITERATIONS = 10  # Maximum planning cycles
+AGENT_TEMPERATURE = 0.7    # LLM creativity (0-1)
+REQUIRE_APPROVAL = True    # If False, agents run autonomously
+```
+
+### RAG Configuration
+
+```python
+# RAG Settings
+USE_RAG = True                  # Enable/disable RAG
+TOP_K_RESULTS = 3              # Similar apps to retrieve
+SIMILARITY_THRESHOLD = 0.7     # Minimum similarity (0-1)
+```
+
 ### Email Keywords
-Edit `config.py` to customize job-related keywords:
 
 ```python
 JOB_KEYWORDS = [
@@ -145,29 +306,13 @@ JOB_KEYWORDS = [
 ```
 
 ### AI Model Selection
-In `ai_analyzer.py`, you can change the model:
+
+In `config.py`:
 
 ```python
-MODEL_NAME = "llama3.2:3b"  # Fast, lightweight
-# MODEL_NAME = "mistral:7b"  # Slower but more accurate
+OLLAMA_MODEL = "llama3.2:3b"  # Fast, lightweight
+# OLLAMA_MODEL = "mistral:7b"  # Slower but more accurate
 ```
-
-### Scan Period
-Default scan looks back 60 days. Change in `config.py`:
-
-```python
-DEFAULT_DAYS_BACK = 60  # Adjust as needed
-```
-
-## 📱 Usage
-
-1. **Launch the Web Interface**:
-   - React UI: Visit http://localhost:5173 (run `npm run dev` in job-tracker/)
-   - Legacy UI: Visit http://localhost:5000
-2. **Start Scanning**: Click "Launch Scan" button
-3. **Choose Time Range**: Select from 5 days to 120 days back
-4. **Monitor Progress**: Real-time progress bar and status updates
-5. **Review Results**: Filter by status, update applications, add notes
 
 ## 🛠 Troubleshooting
 
@@ -187,66 +332,134 @@ ollama serve
 
 # Check if model is installed
 ollama list
+
+# If model missing, install it
+ollama pull llama3.2:3b
 ```
 
-#### "Gmail API not enabled"
-- Ensure Gmail API is enabled in Google Cloud Console
-- Check that `credentials.json` is in the project root
-- Verify OAuth consent screen is configured
+#### Agent Stuck in Loop
+- Backend has been updated with termination logic
+- Agents now complete in 3-4 iterations
+- Check backend logs for "moving to approval"
 
-#### Slow AI Analysis
-- Switch to faster model: `MODEL_NAME = "llama3.2:3b"`
-- The app shows "may take 1-2 min per email" - this is normal
-- Progress updates every email processed
+#### Cards Not Expanding
+- Hard refresh browser (Ctrl+Shift+R)
+- Clear browser cache
+- Ensure you selected a job first
 
-#### No Emails Found
-- Check date range (try more days back)
-- Verify keywords in `config.py` match your emails
-- Ensure Gmail account has job-related emails in the specified period
+#### Approve Button Not Working
+- Check backend is running
+- Verify API endpoint in browser console
+- Check backend logs for errors
 
 ### Performance Tips
 
-- **Use llama3.2:3b** for faster analysis (recommended)
-- **Scan shorter periods** first (5-30 days) to test
-- **Run during off-peak hours** for better AI performance
-- **Close other heavy applications** while scanning
+- **Use llama3.2:3b** for faster agent responses
+- **Scan shorter periods** first (5-30 days)
+- **Run agents one at a time** for best results
+- **Ensure Ollama has sufficient RAM** (8GB+ recommended)
 
 ## 🗂 Project Structure
 
 ```
 Job_Tracker/
-├── app.py                 # Flask web application (backend API)
-├── email_fetcher.py       # Gmail API integration
-├── ai_analyzer.py         # Ollama AI analysis
-├── database.py           # SQLite database operations
-├── config.py             # Configuration settings
-├── credentials.json      # Gmail API credentials (you create this)
-├── token.pkl            # Gmail auth token (auto-generated)
-├── requirements.txt     # Python dependencies
-├── job_tracker.db       # SQLite database (auto-generated)
-├── frontend/            # Legacy HTML frontend
-│   └── index.html
-└── job-tracker/         # Modern React frontend
-    ├── src/            # React components
-    ├── public/         # Static assets
-    ├── package.json    # Node dependencies
-    └── vite.config.js  # Vite configuration
+├── app.py                  # Flask backend API
+├── email_fetcher.py        # Gmail API integration
+├── ai_analyzer.py          # Ollama AI analysis
+├── rag_engine.py          # RAG vector search
+├── database.py            # SQLite operations
+├── config.py              # All configuration
+├── agents/                # AI Agent implementations
+│   ├── __init__.py
+│   ├── base_agent.py      # LangGraph base class
+│   ├── email_agent.py     # Email drafting
+│   ├── research_agent.py  # Company research
+│   ├── interview_agent.py # Interview prep
+│   └── tools.py           # Agent tools
+├── chains.py              # LangChain chains
+├── prompts.py             # Centralized prompts
+├── credentials.json       # Gmail API credentials (you create)
+├── token.pkl             # Gmail auth token (auto-generated)
+├── requirements.txt      # Python dependencies
+├── job_tracker.db        # SQLite database (auto-generated)
+├── chroma_db/            # RAG vector storage
+│   └── tfidf_rag.pkl    # TF-IDF index
+└── job-tracker/          # Modern React frontend
+    ├── src/
+    │   ├── App.jsx              # Main app component
+    │   ├── components/
+    │   │   ├── AgentPanel.jsx   # AI Agents UI
+    │   │   ├── Header.jsx
+    │   │   └── ...
+    │   └── services/
+    │       └── api.js           # API client
+    ├── public/
+    ├── package.json
+    └── vite.config.js
+```
+
+## 🧠 How RAG Works
+
+### What is RAG?
+
+RAG (Retrieval-Augmented Generation) makes AI analysis smarter by learning from your past applications. It uses **TF-IDF vectorization** (lightweight, no GPU needed) to build a searchable index.
+
+### How It Helps
+
+1. **Builds searchable index** of all applications
+2. **Finds similar applications** when analyzing new emails
+3. **Provides context to AI** for better extraction
+4. **Improves over time** as you add more applications
+
+### Example
+
+**Without RAG:**
+```
+New email from "Google Careers"
+AI: "Hmm, what company is this?"
+→ May misidentify
+```
+
+**With RAG:**
+```
+New email from "Google Careers"
+RAG: "You applied to Google before (Software Engineer)"
+AI: "This is from Google, software role"
+→ Better accuracy!
 ```
 
 ## 🔒 Security & Privacy
 
-- **Credentials**: Never commit `credentials.json` or `token.pkl` to version control
-- **Local Processing**: All email analysis happens locally on your machine
-- **Read-Only Access**: App only reads emails, never modifies or sends
-- **No Data Sharing**: Your email data stays on your computer
+- **Credentials**: Never commit `credentials.json` or `token.pkl`
+- **Local Processing**: All analysis happens on your machine
+- **Read-Only Access**: App only reads emails, never modifies
+- **No Cloud**: No data sent to external services (except Gmail API)
+- **Agent Approval**: All agent actions require your approval
+
+## 🎯 API Endpoints
+
+### Email Scanning
+- `GET /api/jobs` - Get all applications
+- `GET /api/stats` - Get statistics
+- `POST /api/scan` - Start email scan
+- `GET /api/scan/status` - Check scan progress
+
+### AI Agents
+- `POST /api/agents/email/draft` - Draft email response
+- `POST /api/agents/email/send` - Send approved email
+- `POST /api/agents/research` - Research company
+- `POST /api/agents/research/approve` - Get final report
+- `POST /api/agents/interview-prep` - Create prep plan
+- `POST /api/agents/interview-prep/approve` - Get final guide
+- `GET /api/agents/status` - Check agent availability
 
 ## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## 📝 License
 
@@ -258,13 +471,25 @@ If you encounter issues:
 
 1. Check the troubleshooting section above
 2. Ensure all prerequisites are installed
-3. Verify authentication is working
-4. Check that Ollama service is running
-5. Look at console logs for specific error messages
+3. Verify Ollama is running (`ollama serve`)
+4. Check backend logs for errors
+5. Hard refresh browser (Ctrl+Shift+R)
 
-For additional help, create an issue in the GitHub repository with:
+For additional help, create an issue with:
 - Error messages
 - Steps to reproduce
+- System information (OS, Python version, Node version)
+- Backend logs
 
-- Your system information (OS, Python version)
-- <img width="1894" height="903" alt="Screenshot 2025-11-21 011621" src="https://github.com/user-attachments/assets/68b40036-218d-422a-8e41-70e01cc88e83" />
+## 🎉 Acknowledgments
+
+- **Ollama** - Local AI inference
+- **LangChain** - AI framework
+- **LangGraph** - Agent state machines
+- **React + Vite** - Modern UI framework
+- **Flask** - Backend API
+- **Gmail API** - Email access
+
+---
+
+**Built with ❤️ for making job hunting easier and smarter!**
