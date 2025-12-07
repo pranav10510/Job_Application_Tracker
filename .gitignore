@@ -25,6 +25,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
 
 # Virtual Environment
 venv/
@@ -38,6 +39,9 @@ env/
 *.swp
 *.swo
 *~
+.project
+.pydevproject
+.settings/
 
 # OS
 .DS_Store
@@ -47,10 +51,16 @@ env/
 .Trashes
 ehthumbs.db
 Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.AppleDouble
+.LSOverride
 
 # Logs
 *.log
 logs/
+/tmp/
+*.log.*
 
 # Database
 *.db
@@ -62,11 +72,13 @@ job_tracker.db
 *.xlsx
 job_applications.xlsx
 
-# Credentials and tokens
+# Credentials and tokens (IMPORTANT - NEVER COMMIT THESE)
 credentials.json
 token.pkl
 *.pem
 *.key
+client_secret*.json
+oauth2*.json
 
 # RAG vector storage
 chroma_db/
@@ -76,6 +88,7 @@ tfidf_rag.pkl
 # Temporary files
 *.tmp
 *.temp
+.cache/
 
 # Node.js
 node_modules/
@@ -100,36 +113,118 @@ dist-ssr/
 *.sln
 *.sw?
 
-# Package manager lock files (optional - uncomment if needed)
-# package-lock.json
-# yarn.lock
-# pnpm-lock.yaml
-
 # Test coverage
 .coverage
 htmlcov/
 .pytest_cache/
 coverage/
+.tox/
+.nox/
 
 # Jupyter Notebooks
 .ipynb_checkpoints/
 *.ipynb
-
-# macOS
-*.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Desktop.ini
-$RECYCLE.BIN/
 
 # Python mypy
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
+# Python pytest
+.pytest_cache/
+
 # Backup files
 *.bak
 *.backup
 *~
+
+# Documentation files (change tracking - optional, can be committed)
+# Uncomment these if you don't want to track these files:
+AGENT_IMPROVEMENTS.md
+FIXES_APPLIED.md
+FINAL_FIXES.md
+NEW_UI_FEATURES.md
+DELIVERY_SUMMARY.md
+IMPLEMENTATION_GUIDE.md
+COMMIT_GUIDE.md
+
+# Agent test data (optional)
+tests/__pycache__/
+tests/*.pyc
+
+# Frontend specific
+job-tracker/.env
+job-tracker/.env.local
+job-tracker/dist/
+job-tracker/node_modules/
+job-tracker/.cache/
+
+# Production builds
+/frontend/build/
+/frontend/dist/
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Compiled binary addons
+*.node
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.parcel-cache
+
+# Next.js
+.next/
+out/
+
+# Nuxt.js
+.nuxt/
+
+# Gatsby
+.cache/
+public
+
+# Serverless
+.serverless/
+
+# FuseBox
+.fusebox/
+
+# DynamoDB Local
+.dynamodb/
+
+# TernJS
+.tern-port
+
+# Stores VSCode versions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*

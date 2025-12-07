@@ -5,6 +5,7 @@ import SimpleScanPanel from './components/SimpleScanPanel'
 import SimpleFilterBar from './components/SimpleFilterBar'
 import SimpleJobCard from './components/SimpleJobCard'
 import JobModal from './components/JobModal'
+import AgentPanel from './components/AgentPanel'
 import { fetchJobs, fetchStats } from './services/api'
 import { mockInit } from './data/mock'
 
@@ -22,6 +23,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [editingJob, setEditingJob] = useState(null)
   const [currentView, setCurrentView] = useState('dashboard')
+  const [selectedJobForAgent, setSelectedJobForAgent] = useState(null)
 
   useEffect(() => {
     loadJobs()
@@ -126,7 +128,16 @@ function App() {
               <span className="text-2xl">📈</span>
               <span className="font-medium">Analytics</span>
             </button>
-            <button 
+            <button
+              onClick={() => setCurrentView('agents')}
+              className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-colors text-lg ${
+                currentView === 'agents' ? 'bg-white/20' : 'hover:bg-white/10'
+              }`}
+            >
+              <span className="text-2xl">🤖</span>
+              <span className="font-medium">AI Agents</span>
+            </button>
+            <button
               onClick={() => setCurrentView('settings')}
               className={`w-full flex items-center gap-4 px-4 py-3 rounded-lg transition-colors text-lg ${
                 currentView === 'settings' ? 'bg-white/20' : 'hover:bg-white/10'
@@ -147,16 +158,18 @@ function App() {
                 {currentView === 'dashboard' && 'Dashboard'}
                 {currentView === 'applications' && 'All Applications'}
                 {currentView === 'analytics' && 'Analytics'}
+                {currentView === 'agents' && 'AI Agents'}
                 {currentView === 'settings' && 'Settings'}
               </h1>
               <p className="text-lg text-gray-600 mt-2">
                 {currentView === 'dashboard' && 'Track and manage your job applications'}
                 {currentView === 'applications' && 'Manage all your job applications'}
                 {currentView === 'analytics' && 'Analyze your job search performance'}
+                {currentView === 'agents' && 'Automate your job search with AI-powered agents'}
                 {currentView === 'settings' && 'Configure your application preferences'}
               </p>
             </div>
-            {currentView !== 'settings' && (
+            {currentView !== 'settings' && currentView !== 'agents' && (
               <button
                 onClick={handleAddJob}
                 className="btn-primary flex items-center gap-3 text-lg px-6 py-3"
@@ -392,6 +405,146 @@ function App() {
             </div>
           )}
 
+          {/* AI Agents View */}
+          {currentView === 'agents' && (
+            <div className="space-y-6">
+              {/* Job Selection - Shows only when no agent is active */}
+              {!selectedJobForAgent && (
+                <div className="card p-8">
+                  <h2 className="text-2xl font-semibold mb-6">Select an Application</h2>
+                  <p className="text-gray-600 mb-6">Choose a job application to launch AI agents:</p>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+                    {filteredJobs.length === 0 ? (
+                      <div className="col-span-full text-center p-12">
+                        <div className="text-5xl mb-4">📭</div>
+                        <div className="text-gray-900 font-semibold text-xl mb-2">No applications found</div>
+                        <div className="text-gray-600 text-base">Add some applications first to use AI agents</div>
+                      </div>
+                    ) : (
+                      filteredJobs.map((job) => (
+                        <div
+                          key={job.id}
+                          className="border border-gray-200 rounded-lg p-6 hover:border-indigo-500 hover:bg-indigo-50 transition-all cursor-pointer"
+                          onClick={() => setSelectedJobForAgent(job)}
+                        >
+                          <div className="flex items-center gap-3 mb-2">
+                            <h3 className="font-semibold text-gray-900 text-lg">{job.company}</h3>
+                            <span className={`px-3 py-1 text-sm font-medium rounded-full status-${job.status.toLowerCase()}`}>
+                              {job.status}
+                            </span>
+                          </div>
+                          <p className="text-gray-600 text-base mb-3">{job.role}</p>
+                          <button className="text-indigo-600 font-medium text-sm hover:text-indigo-700">
+                            Select & Launch Agents →
+                          </button>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </div>
+              )}
+
+              {/* Agent Cards - Shows when job is selected */}
+              {selectedJobForAgent && (
+                <div>
+                  {/* Selected Job Info */}
+                  <div className="card p-6 mb-6">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center">
+                          <span className="text-2xl">🎯</span>
+                        </div>
+                        <div>
+                          <h3 className="text-xl font-semibold">{selectedJobForAgent.company}</h3>
+                          <p className="text-gray-600">{selectedJobForAgent.role}</p>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => setSelectedJobForAgent(null)}
+                        className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg transition-colors font-medium"
+                      >
+                        ← Change Application
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Agent Panel - Now at top level */}
+                  <AgentPanel application={selectedJobForAgent} />
+                </div>
+              )}
+
+              {/* Agent Information Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="card p-8">
+                  <div className="text-3xl mb-4">📧</div>
+                  <h3 className="text-xl font-semibold mb-2">Email Agent</h3>
+                  <p className="text-gray-600 text-base mb-4">
+                    Automatically draft professional email responses to recruiters and hiring managers.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Smart tone matching</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Template selection</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Gmail integration</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="card p-8">
+                  <div className="text-3xl mb-4">🔍</div>
+                  <h3 className="text-xl font-semibold mb-2">Research Agent</h3>
+                  <p className="text-gray-600 text-base mb-4">
+                    Deep research on companies, roles, and industry insights to help you prepare.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Company analysis</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>News & insights</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Culture research</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="card p-8">
+                  <div className="text-3xl mb-4">📚</div>
+                  <h3 className="text-xl font-semibold mb-2">Interview Agent</h3>
+                  <p className="text-gray-600 text-base mb-4">
+                    Create personalized interview preparation plans based on the role and company.
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Question database</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Study plans</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <span className="text-green-600">✓</span>
+                      <span>Skill gap analysis</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Settings View */}
           {currentView === 'settings' && (
             <div className="space-y-6">
@@ -408,7 +561,7 @@ function App() {
                         <div className="w-5 h-5 bg-white rounded-full absolute right-0.5 top-0.5"></div>
                       </button>
                     </div>
-                    
+
                     <div className="flex items-center justify-between py-3">
                       <div>
                         <label className="text-gray-900 font-medium text-base">Auto Scan</label>
@@ -428,12 +581,12 @@ function App() {
                       <div className="font-medium text-base text-gray-900">Export Data</div>
                       <div className="text-gray-600 text-sm">Download all your applications</div>
                     </button>
-                    
+
                     <button className="w-full text-left px-4 py-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors">
                       <div className="font-medium text-base text-gray-900">Import Data</div>
                       <div className="text-gray-600 text-sm">Import from CSV or other sources</div>
                     </button>
-                    
+
                     <button className="w-full text-left px-4 py-3 bg-red-50 hover:bg-red-100 rounded-lg transition-colors">
                       <div className="font-medium text-base text-red-900">Clear All Data</div>
                       <div className="text-red-600 text-sm">Permanently delete all applications</div>
